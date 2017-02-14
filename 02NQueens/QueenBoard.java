@@ -3,15 +3,16 @@ public class QueenBoard{
     private int solutionCount;
     
     public QueenBoard(int size){
-        if (size <= 3){
-            //throw error
+        if (size < 1){
+            throw new IndexOutOfBoundsException("Index " +size + " is out of bounds! Please enter a board size greater than 0!");
         }
         board = new int[size][size];
+        solutionCount = -1;
         for (int i =0; i < board.length; i ++){
             for (int j =0; j <board.length; j++){
                 board[i][j] = 0;
             }
-    }
+        }
     }
 
     public void solve(){ 
