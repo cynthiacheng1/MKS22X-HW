@@ -2,29 +2,38 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.Arrays;
 
 public class Quick{
-	
-	public static int part(int[] data, int start, int end){
-		int randomIndex = ThreadLocalRandom.current().nextInt(start, end);
-		int pivot = data[randomIndex];
-		data[randomIndex] = data[start];
-		data[start] = pivot;
-		System.out.println("pivot: " + pivot);
-		int now = start+1;
+
+	public static int part(int[] data, int start, int e){
+		System.out.println("org " + Arrays.toString(data));
+		int randomIndex = ThreadLocalRandom.current().nextInt(start, e);
 		int prev = start;
-		System.out.println("now: " + now + " prev: " + prev);
-		for (int i =start+1; i <= end; i++){
-			if (data[i] < pivot){
-				System.out.println("tru");
-				int num = data[now];
-				data[now] = data[i];
-				data[i] = num;
-				prev = now++;
+		int now = start+1;
+		int end = e;
+		int pivot = data[randomIndex];
+		swap(data, start, randomIndex);
+		System.out.println("pivot: " + pivot);
+		while (now <= end){
+			if (data[now] == pivot){
+				now++;
 			}
-			System.out.println(Arrays.toString(data));
+			else if (data[now] < pivot){
+				swap(data, prev, now);
+				prev++;
+				now++;
+			}
+			else{
+				swap(data, now, end);
+				end--;
+			}
 		}
-		data[start] = data[prev];
-		data[prev] = pivot;
+		System.out.println("updated " + Arrays.toString(data));
 		return prev;
+	}
+
+	public static void swap(int[] data, int here, int there){
+		int org = data[here];
+		data[here] = data[there];
+		data[there] = org;
 	}
 
 	public static int quickSelect(int[]data, int k){
@@ -51,6 +60,6 @@ public class Quick{
 		int[] a = {2, 10, 15, 23, 0,  5};
 		//System.out.println(part(a,0,10));
 		System.out.println(part(a, 0, a.length-1));
-		System.out.println(java.util.Arrays.toString(a));
+		//System.out.println(java.util.Arrays.toString(a));
     }
 }
