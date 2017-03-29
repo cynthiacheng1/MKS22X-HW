@@ -3,12 +3,13 @@ import java.util.Arrays;
 
 public class Quick{
 
-	public static int part(int[] data, int start, int e){
+	public static int[] part(int[] data, int start, int e){
 		System.out.println("org " + Arrays.toString(data));
 		int randomIndex = ThreadLocalRandom.current().nextInt(start, e);
 		int prev = start;
 		int now = start+1;
 		int end = e;
+		int[] bounds = new int[2];
 		int pivot = data[randomIndex];
 		swap(data, start, randomIndex);
 		System.out.println("pivot: " + pivot);
@@ -27,7 +28,9 @@ public class Quick{
 			}
 		}
 		System.out.println("updated " + Arrays.toString(data));
-		return prev;
+		bounds[0] = prev;
+		bounds[1] = end;
+		return bounds;
 	}
 
 	public static void swap(int[] data, int here, int there){
@@ -41,25 +44,36 @@ public class Quick{
 	}
 
 	public static int quickSelectH(int[]data, int k, int start, int end){
-		int num = part(data,start,end);
-		start = start;
-		end = end;
-		if (num < k){
-			start = num;
-			quickSelectH(data, k, start, end);
+		int[] num = part(data,start,end);
+
+		if (k>= num[0] && k <= num[1]){
+			return data[k];
 		}
-		else if (num >k) {
-			end = num;
-			quickSelectH(data, k, start, end);
+		if (num[1] < k){
+			return quickSelectH(data, k, num[1]+1, end);
 		}
-		return 0;
+		return quickSelectH(data, k, start, num[0]-1);
+	}
+
+	public static void quicksort(int[] data){
+		quicksortH(data,0,data.length-1);
+	}
+
+	public static void quicksortH(int[] data, int start, int end){
+		if (start < end){
+			int[] bounds = part(data,start,end);
+			System.out.println("bounds " + Arrays.toString(bounds));
+			quicksortH(data,start,bounds[0]-1);
+			quicksortH(data,bounds[1]+1,end);
+		}
 	}
 
 	public static void main(String[] args){
-		Quick q = new Quick();
-		int[] a = {2, 10, 15, 23, 0,  5};
+		int[] a = {2, 10, 15, 23, 0, 0, 5};
 		//System.out.println(part(a,0,10));
-		System.out.println(part(a, 0, a.length-1));
+		//part(a, 0, a.length-1);
+		quicksort(a);
+		System.out.println("final " + Arrays.toString(a));
 		//System.out.println(java.util.Arrays.toString(a));
     }
 }
