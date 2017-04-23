@@ -4,7 +4,7 @@ import java.util.Arrays;
 public class Quick{
 
 	public static int[] part(int[] data, int start, int e){
-		System.out.println("org " + Arrays.toString(data));
+		//System.out.println("org " + Arrays.toString(data));
 		int randomIndex = ThreadLocalRandom.current().nextInt(start, e);
 		int prev = start;
 		int now = start+1;
@@ -12,13 +12,13 @@ public class Quick{
 		int[] bounds = new int[2];
 		int pivot = data[randomIndex];
 		swap(data, start, randomIndex);
-		System.out.println("pivot: " + pivot);
+		//System.out.println("pivot: " + pivot);
 		while (now <= end){
 			if (data[now] == pivot){
 				now++;
 			}
 			else if (data[now] < pivot){
-				swap(data, prev, now);
+				swap(data, prev, now); 
 				prev++;
 				now++;
 			}
@@ -27,7 +27,7 @@ public class Quick{
 				end--;
 			}
 		}
-		System.out.println("updated " + Arrays.toString(data));
+		//System.out.println("updated " + Arrays.toString(data));
 		bounds[0] = prev;
 		bounds[1] = end;
 		return bounds;
@@ -62,7 +62,7 @@ public class Quick{
 	public static void quicksortH(int[] data, int start, int end){
 		if (start < end){
 			int[] bounds = part(data,start,end);
-			System.out.println("bounds " + Arrays.toString(bounds));
+			//System.out.println("bounds " + Arrays.toString(bounds));
 			quicksortH(data,start,bounds[0]-1);
 			quicksortH(data,bounds[1]+1,end);
 		}
