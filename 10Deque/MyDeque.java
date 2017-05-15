@@ -1,37 +1,14 @@
+import java.util.NoSuchElementException;
+ 
 public class MyDeque{
-	int front=0;
-	int back=0;
-	String[] deque = new String[10];
+	String[] deque;
+	int front, back, size;
 
-	public void addFirst(String element){
-		//if element is null then throw new Nullpointer excpetion
-		if (back+1 == front || (front == 0 && back == deque.length)){
-			resize();
-		}
-		if (front ==0){
-			front = deque.length;
-		}
-		front--;
-		deque[front] = element;
-	}
-
-	public void addLast(String element){
-		if (back+1 == front || (front == 0 && back == deque.length)){
-			resize();
-		}
-		if (back == deque.length){
-			back = -1;
-		}
-		back++;
-		deque[back] = element;
-	}
-
-	public String printDeque(){
-		String ans ="[";
-		for (int i=0; i < deque.length; i++){
-			ans += deque[i] +",";
-		}
-		return ans.substring(0,ans.length) +"]";
+	public MyDeque(){
+		deque = new String[10];
+		front = 5;
+		back = 4;
+		size = 0;
 	}
 
 	public void resize(){
@@ -40,8 +17,90 @@ public class MyDeque{
 			newDeque[i] = deque[front%(deque.length)];
 			front++;
 		}
-		front = 0
+		front = 0;
 		back = deque.length-1;
 		deque = newDeque;
 	}
+
+	public void addFirst(String e){
+		if (e.equals(null)){
+			throw new NullPointerException();
+		}
+		if (size == deque.length){
+			resize();
+		}
+		if (front == 0){
+			front = deque.length -1;
+		}
+		else{
+			front--;
+		}
+		deque[front] = e;
+		size++;
+	}
+	public void addLast(String e){
+		if (e.equals(null)){
+			throw new NullPointerException(); 
+		}
+		if (size == deque.length){
+			resize();
+		}
+		if (back == deque.length){
+			back = 0;
+		}
+		else{
+			back++;
+		}
+		deque[back] = e;
+		size++;
+	}
+
+	public String removeFirst(){
+		int orgFirstIndex;
+		if (size ==0){
+			throw new NoSuchElementException();
+		}
+		if (front == deque.length-1){
+			front = 0;
+			orgFirstIndex = deque.length-1;
+		}
+		else{
+			front++;
+			orgFirstIndex = front-1;
+		}
+		size--;
+		return deque[orgFirstIndex];
+	}
+	public String removeLast(){
+		int orgLastIndex;
+		if (size ==0){
+			throw new NoSuchElementException();
+		}
+		if (back == 0){
+			back = deque.length-1;
+			orgLastIndex = 0;
+		}
+		else{
+			back--;
+			orgLastIndex = back+1;
+		}
+		size--;
+		return deque[orgLastIndex];
+	}
+
+	public String getFirst() {
+        if (size == 0) {
+            throw new NoSuchElementException();
+        }
+        return deque[front];
+    }
+
+    public String getLast() {
+        if (size == 0) {
+            throw new NoSuchElementException();
+        }
+        return deque[back];
+    }
+
+
 }
