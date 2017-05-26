@@ -5,7 +5,7 @@ public class Location implements Comparable<Location>{
 	private Location previous;
 	private boolean aStar;
 
-	public Location(int r, int c, Location prev, int distToStrt;, int distToGol, boolean aStr){
+	public Location(int r, int c, Location prev, int distToStrt, int distToGol, boolean aStr){
 		row = r;
 		col = c;
 		previous = prev;
@@ -16,25 +16,39 @@ public class Location implements Comparable<Location>{
 
 	public int compareTo(Location other){
 		if(aStar){
-			return distToGoal+distToStart - (other.getDistToGoal() + other.getDistToStart());
+			return distanceToGoal+distanceToStart - (other.getDistToGoal() + other.getDistToStart());
 		}
-		return distToGoal - other.getDistToGoal();
+		return distanceToGoal - other.getDistToGoal();
 	}
     public static int dist(Location loc, int r, int c){
 		return Math.abs(loc.getRow() - r) + Math.abs(loc.getCol() - c);
     }
 
-    public int getRow(){return row;}
+    public int getRow(){
+    	return row;
+    }
 
-    public int getCol(){return col;}
+    public int getCol(){
+    	return col;
+    }
 
-    public int getDistToGoal(){return distToGoal;}
+    public int getDistToGoal(){
+    	return distanceToGoal;
+    }
 
-    public int getDistToStart(){return distToStart;}
+    public int getDistToStart(){
+    	return distanceToStart;
+    }
 
-    public Location getPrevious(){return previous;}
+    public Location getPrevious(){
+    	return previous;
+    }
     
-    public boolean getAStar(){return aStar;}
+    public boolean getAStar(){
+    	return aStar;
+    }
 
-    public void setAStar(boolean a){aStar = a;}
+    public void setAStar(boolean a){
+    	aStar = a;
+    }
 }
