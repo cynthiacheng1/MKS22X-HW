@@ -2,18 +2,14 @@ public class MazeSolver{
     public Maze board;
     public Frontier frontier;
     public boolean a;
-
-    public MazeSolver(String filename){
-    	this(filename,false);
-    }
     
-    public MazeSolver(String filename, boolean animate){
+    public MazeSolver(String filename, boolean animated){
 		board = new Maze(filename);
-		a = animate;
+		a = animated;
     }
 
     public void solve(){
-    	solve(1);
+    	solve(0);
     }
 
     public void solve(int way){
@@ -30,10 +26,9 @@ public class MazeSolver{
 		    frontier = new FrontierPriorityQueue();
 		    board.getStart().setAStar(true);
 		}
-
-		frontier.add(board.getStart());
+		Location l = board.getStart()
+		frontier.add(l);
 		boolean done = false;
-		
 		while(frontier.hasNext() && !done){
 		    if(a) {
 		    	System.out.println(board.toString(50));
@@ -57,7 +52,7 @@ public class MazeSolver{
 		    int r = l.getRow() + (i%2) * (2-i);
 		    int c = l.getCol() + ((i+1)%2) * (i-3);
 		    
-		    if(isValid(r, c)){
+		    if(board.get(r, c) == ' '){
 				frontier.add(new Location(r, c, l, Location.dist(board.getStart(), r, c), Location.dist(board.getEnd(), r, c), l.getAStar()));
 		    }
 		}
@@ -71,16 +66,9 @@ public class MazeSolver{
 		}
     }
     
-    public boolean isValid(int r, int c){
-		return board.get(r, c) == ' ';
-    }
     
     public String toString(){
     	return board.toString();
     }
 
-    public static void main(String[] args){
-		MazeSolver m = new MazeSolver(args[0], true);
-		m.solve(Integer.parseInt(args[1]));
-    }
 }
