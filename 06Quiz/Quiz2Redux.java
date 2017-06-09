@@ -6,23 +6,19 @@ public class Quiz2Redux{
    *in the original string.
    */
   public static ArrayList<String> combinations(String s){
-    ArrayList<String>words = new ArrayList<String>();
-    words.add(" ");
-    help(words, s, 0);
+    ArrayList<String> words = new ArrayList<String>();
+    help(words, s, 0, "");
     Collections.sort(words);
     return words;
   }
   
-  private static void help(ArrayList<String> words, String orgString, int index){
-    if (index == orgString.length()){
+  private static void help(ArrayList<String> words, String orgString, int index, String s){
+    if (index >= orgString.length()){
+      words.add(s);
       return;
     }
-    for (int i =0; i < orgString.length(); i++){
-      int size = words.size();
-      for (int j =0; j <size; j++){
-        words.add(words.get(j) + orgString.charAt(i));
-      }
-    }
+    help(words, orgString, index+1, s);
+    help(words, orgString, index+1, s + orgString.substring(index,index+1) );
   }
 
   public static void main(String args[]){
